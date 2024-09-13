@@ -1,3 +1,26 @@
+document.getElementById("form").onsubmit = async function(e) {
+    e.preventDefault();  // Prevent the default form submission behavior
+
+    const formData = new FormData(e.target);  // Collect form data
+
+    try {
+        const response = await fetch(e.target.action, {
+            method: "POST",  // Ensure it's a POST request
+            body: formData,  // Send the form data
+        });
+
+        const result = await response.json();  // Await the response
+        if (result.result === "success") {
+            alert("Form submitted successfully!");
+        } else {
+            alert("Something went wrong. Please try again.");
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert("An error occurred. Please try again.");
+    }
+};
+
 (function ($) {
     "use strict";
 
@@ -54,9 +77,11 @@
 
 
     // Facts counter
-    $('[data-toggle="counter-up"]').counterUp({
-        delay: 10,
-        time: 2000
+    $(document).ready(function() {
+        $('.counter').counterUp({
+            delay: 10,
+            time: 1000
+        });
     });
     
     
@@ -123,4 +148,5 @@
     });
     
 })(jQuery);
+
 
